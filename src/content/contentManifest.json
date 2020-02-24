@@ -1,0 +1,19 @@
+{
+  "home": {
+    "relpath": "/",
+    "chapters": ["homepage.mdx", "omnews.mdx"]
+  },
+  "resources": {
+    "relpath": "/resources/",
+    "chapters": [
+      "websites.mdx",
+      "internal-manuals.mdx",
+      "software-manuals.mdx",
+      "procedures.mdx"
+    ]
+  },
+  "staff": {
+    "relpath": "/staff/",
+    "chapters": ["roster.mdx", "org-chart.mdx"]
+  }
+}

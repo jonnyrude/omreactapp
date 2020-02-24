@@ -1,8 +1,11 @@
 {
+  "homepage": "C:/Users/JrKre/Code/LawFirm/reactapp/omdocsmdx/build",
   "name": "omdocsmdx",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.26.11",
+    "glob": "^7.1.6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts-mdx": "3.0.3"
