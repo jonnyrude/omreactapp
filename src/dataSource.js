@@ -23,22 +23,34 @@ import OrgChart, {
   frontMatter as orgChartFrontMatter
 } from './content/staff/org-chart.mdx';
 
+// New MDX file needs to be
+//   1. Imported and assined a variable starting with a capital letter (above)
+//   2. Added as a chapter below (or as starting page content for a tab)
+//       First chapter should be to default path
+
 export const Data = {
   tabs: [
     {
       name: 'Home',
       path: '/',
       exact: true,
+      component: Home,
+      chapters: [{ path: '' }]
+    },
+    {
+      name: 'News',
+      path: '/news',
+      exact: false,
       chapters: [
         {
-          name: 'Main Page',
-          path: '',
+          name: 'Recent',
+          path: '/recent',
           component: Home,
           mdxFrontMatter: homeFrontMatter
         },
         {
-          name: 'News',
-          path: '/news',
+          name: 'Archive',
+          path: '/archive',
           component: OmNews,
           mdxFrontMatter: omNewsFrontMatter
         }
@@ -46,7 +58,7 @@ export const Data = {
     },
     {
       name: 'Resources',
-      path: '/resources/',
+      path: '/resources',
       exact: false,
       chapters: [
         {
@@ -57,7 +69,7 @@ export const Data = {
         },
         {
           name: 'Firm Manuals',
-          path: 'firm-manuals',
+          path: '/firm-manuals',
           component: InternalManuals,
           mdxFrontMatter: interManualsFrontMatter
         },
@@ -77,7 +89,7 @@ export const Data = {
     },
     {
       name: 'Staff',
-      path: '/staff/',
+      path: '/staff',
       exact: false,
       chapters: [
         {
@@ -88,7 +100,7 @@ export const Data = {
         },
         {
           name: 'Org Chart',
-          path: 'org-chart',
+          path: '/org-chart',
           component: OrgChart,
           mdxFrontMatter: orgChartFrontMatter
         }

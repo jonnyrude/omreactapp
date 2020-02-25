@@ -4,6 +4,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import { Layout, Menu, Icon, Breadcrumb, Button } from 'antd';
 import ContentManifest from './content/contentManifest.json';
 import { Data } from './dataSource.js';
+import MyMenu from './myMenu.js';
 
 // CONTENT
 import Home, {
@@ -43,7 +44,10 @@ function App() {
           {Data.tabs.map((tab, i) => {
             return (
               <Menu.Item key={i + 1}>
-                <Link to={tab.path} className="nav-link">{`${tab.name}`}</Link>
+                <Link
+                  to={tab.path + tab.chapters[0].path}
+                  className="nav-link"
+                >{`${tab.name}`}</Link>
               </Menu.Item>
             );
           })}
@@ -72,24 +76,27 @@ function App() {
                   key={i}
                   path={`${tab.path}`}
                   exact={tab.exact}
-                  cponent={Menu}
-                >
-                  <Menu
-                    theme="dark"
-                    mode="inline"
-                    defaultSelectedKeys={['chpter0']}
-                    defaultOpenKeys={['sub1']}
-                    style={{ height: '100%', borderRight: 0 }}
-                  >
-                    {tab.chapters.map((chapter, i) => {
-                      return (
-                        <Menu.Item key={`chpter${i}`}>
-                          <Link to={chapter.path}>{chapter.name}</Link>
-                        </Menu.Item>
-                      );
-                    })}
-                  </Menu>
-                </Route>
+                  render={propsForSider => (
+                    <Menu
+                      theme="dark"
+                      mode="inline"
+                      defaultSelectedKeys={['chpter0']}
+                      defaultOpenKeys={['sub1']}
+                      style={{ height: '100%', borderRight: 0 }}
+                    >
+                      {/* {console.log(propsForSider)} */}
+                      {tab.chapters.map((chapter, i) => {
+                        return (
+                          <Menu.Item key={`chpter${i}`}>
+                            <Link to={propsForSider.match.path + chapter.path}>
+                              {chapter.name}
+                            </Link>
+                          </Menu.Item>
+                        );
+                      })}
+                    </Menu>
+                  )}
+                ></Route>
               );
             })}
           </Switch>
@@ -100,6 +107,7 @@ function App() {
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
           </Breadcrumb>
+
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div
               style={{
@@ -108,13 +116,57 @@ function App() {
                 textAlign: 'center'
               }}
             >
-              <Home />
+              {/* For each tab, create a default route */}
+              {/* {Data.tabs.map((tabHome, i) => {
+                return (
+                  <Route
+                    key={`tabhome${i}`}
+                    path={tabHome.path}
+                    exact={tabHome.exact}
+                    render={tabHome.component}
+                  />
+                );
+              })} */}
+
+              {/* Create a route just for homepage */}
+
+              <Route
+                key={`homepageContent`}
+                path={'/'}
+                exact={true}
+                render={Data.tabs[0].component}
+              />
+
+              {/* For each tab, render a route for it's default content an its chapters */}
+              {Data.tabs.map((tb, i) => {
+                return (
+                  <Route
+                    key={`tb${i}`}
+                    path={tb.path}
+                    exact={false}
+                    render={propsForContent => {
+                      return tb.chapters.map((chpter, i) => {
+                        return (
+                          <Route
+                            key={`tbchptr#${i}`}
+                            path={propsForContent.match.path + chpter.path}
+                            render={chpter.component}
+                          />
+                        );
+                      });
+                    }}
+                  ></Route>
+                );
+              })}
             </div>
           </Content>
+
           <Footer style={{ textAlign: 'center' }}>
             Insert Page Through Elements here
           </Footer>
         </Layout>
+
+        {/*  */}
       </Layout>
       {/*
       <Switch>
