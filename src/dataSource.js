@@ -34,7 +34,8 @@ export const Data = {
       name: 'Home',
       path: '/',
       exact: true,
-      component: Home
+      component: Home,
+      chapters: [{ path: '/home', component: Home }]
     },
     {
       name: 'News',

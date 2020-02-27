@@ -88,11 +88,7 @@ function App() {
                 }
               >
                 <Link
-                  to={
-                    tab.chapters === undefined
-                      ? tab.path
-                      : tab.path + tab.chapters[0].path
-                  }
+                  to={tab.path + tab.chapters[0].path}
                   className="tab-link"
                   // style={{ color: 'red' }}
                 >{`${tab.name}`}</Link>
@@ -173,38 +169,33 @@ function App() {
                 textAlign: 'center'
               }}
             >
+              <Route
+                key={`homepageContent`}
+                path={'/'}
+                exact={true}
+                render={Data.tabs[0].component}
+              />
+
               {/* For each tab, render a route for it's default content an its chapters */}
               {Data.tabs.map((tb, i) => {
-                if (tb.chapter === undefined) {
-                  return (
-                    <Route
-                      key={`tbhome#${i}`}
-                      path={tb.path}
-                      render={tb.component}
-                    />
-                  );
-                } else {
-                  return (
-                    <Route
-                      key={`tb${i}`}
-                      path={tb.path}
-                      exact={false}
-                      render={propsForContent => {
-                        /* If tab has no chapters, it better have a component */
-
-                        tb.chapters.map((chpter, i) => {
-                          return (
-                            <Route
-                              key={`tbchptr#${i}`}
-                              path={propsForContent.match.path + chpter.path}
-                              render={chpter.component}
-                            />
-                          );
-                        });
-                      }}
-                    ></Route>
-                  );
-                }
+                return (
+                  <Route
+                    key={`tb${i}`}
+                    path={tb.path}
+                    exact={false}
+                    render={propsForContent => {
+                      return tb.chapters.map((chpter, i) => {
+                        return (
+                          <Route
+                            key={`tbchptr#${i}`}
+                            path={propsForContent.match.path + chpter.path}
+                            render={chpter.component}
+                          />
+                        );
+                      });
+                    }}
+                  ></Route>
+                );
               })}
             </div>
           </Content>
