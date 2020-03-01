@@ -24,9 +24,9 @@ import OrgChart, {
 } from './content/staff/org-chart.mdx';
 
 // New MDX file needs to be
-//   1. Imported and assined a variable starting with a capital letter (above)
+//   1. Imported and assinged a variable starting with a capital letter (above)
 //   2. Added as a chapter below (or as starting page content for a tab)
-//       First chapter should be to default path
+//       First chapter will be default of the tab
 
 export const Data = {
   tabs: [
@@ -80,7 +80,7 @@ export const Data = {
           mdxFrontMatter: softManualsFrontMatter
         },
         {
-          name: 'Formal Procedurs',
+          name: 'Formal Procedures',
           path: '/procedures',
           component: Procedures,
           mdxFrontMatter: procedureFrontMatter

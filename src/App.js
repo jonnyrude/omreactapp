@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Link, Route, Switch } from 'react-router-dom';
-import { Layout, Menu, Icon, Breadcrumb, Button } from 'antd';
+import { Layout, Menu, Input, Card, Icon, Breadcrumb, Button } from 'antd';
 import ContentManifest from './content/contentManifest.json';
 import { Data } from './dataSource.js';
 import MyMenu from './myMenu.js';
@@ -15,9 +15,7 @@ import MenuItem from 'antd/lib/menu/MenuItem';
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-// TODO: Add Ant library pieces
-// TODO: Add Header
-// TODO: Add Tabs across Top, each tab takes you to a new route
+// TODO:
 // TODO:
 // TODO:
 
@@ -57,8 +55,36 @@ function App() {
     });
   });
 
-  const [tab, setTab] = useState(0);
-  const [chapter, setChapter] = useState(1);
+  //
+  //  SEARCH FUNCTION
+  //
+  // Returns an array of chapters with their name, path (/tab/chapter), and frontMatter
+  const search = function(searchTerm) {
+    let searchResults = [];
+    Data.tabs.forEach(tabsToSearch => {
+      // console.log(tabsToSearch.name);
+      tabsToSearch.chapters.forEach(chapterToSearch => {
+        if (chapterToSearch.mdxFrontMatter) {
+          let mdx = chapterToSearch.mdxFrontMatter;
+          let lowerSearch = searchTerm.toLowerCase();
+          if (
+            mdx.title.toLowerCase().includes(searchTerm) ||
+            mdx.slug.toLowerCase().includes(searchTerm)
+          ) {
+            searchResults.push({
+              chapterName: chapterToSearch.name,
+              fullPath: tabsToSearch.path + chapterToSearch.path,
+              chapterSlug: chapterToSearch.mdxFrontMatter.slug
+            });
+          }
+        }
+      });
+    });
+    return searchResults;
+  };
+
+  const [searchResults, setSearchResults] = useState([]);
+
   return (
     <Layout>
       <Header className="header">
@@ -95,6 +121,28 @@ function App() {
               </Menu.Item>
             );
           })}
+
+          {/*
+           * *
+           * SEARCH BAR
+           * *
+           * *
+           * */}
+
+          <div className="menuSearch">
+            <Link to="/search">
+              <Input.Search
+                placeholder="Search"
+                enterButton="Search"
+                onSearch={(value, event) => {
+                  console.log(`Searched for: ${value}`);
+                  let results = search(value);
+                  setSearchResults(results);
+                }}
+                // onChange={e => console.log(e)}
+              />
+            </Link>
+          </div>
         </Menu>
       </Header>
       <Layout>
@@ -176,7 +224,7 @@ function App() {
                 render={Data.tabs[0].component}
               />
 
-              {/* For each tab, render a route for it's default content an its chapters */}
+              {/* For each tab, render a route for it's default content and its chapters */}
               {Data.tabs.map((tb, i) => {
                 return (
                   <Route
@@ -197,6 +245,29 @@ function App() {
                   ></Route>
                 );
               })}
+
+              {/* Create a route for the seach */}
+              <Route key={'searchKey'} path={'/search'} exact>
+                <div className="resultsPane">
+                  {searchResults.length > 0 ? (
+                    searchResults.map(matchingChapter => {
+                      return (
+                        <Link to={matchingChapter.fullPath}>
+                          <Card
+                            size="small"
+                            title={matchingChapter.chapterName}
+                            className="resultCard"
+                          >
+                            {matchingChapter.chapterSlug}
+                          </Card>
+                        </Link>
+                      );
+                    })
+                  ) : (
+                    <span>No Matching Search Results</span>
+                  )}
+                </div>
+              </Route>
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>

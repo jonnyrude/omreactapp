@@ -39,3 +39,21 @@
   display: inline;
   text-decoration: none;
 }
+
+.menuSearch {
+  float: right;
+}
+
+.ant-input-search {
+  vertical-align: middle;
+}
+
+.resultsPane {
+  background-color: #f0f2f5;
+  padding: 10px;
+}
+
+.resultCard {
+  margin-top: 25px;
+  text-align: left;
+}
