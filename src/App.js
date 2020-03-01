@@ -68,8 +68,8 @@ function App() {
           let mdx = chapterToSearch.mdxFrontMatter;
           let lowerSearch = searchTerm.toLowerCase();
           if (
-            mdx.title.toLowerCase().includes(searchTerm) ||
-            mdx.slug.toLowerCase().includes(searchTerm)
+            mdx.title.toLowerCase().includes(lowerSearch) ||
+            mdx.slug.toLowerCase().includes(lowerSearch)
           ) {
             searchResults.push({
               chapterName: chapterToSearch.name,
@@ -130,7 +130,7 @@ function App() {
            * */}
 
           <div className="menuSearch">
-            <Link to="/search">
+            <Link to="/search" draggable="false">
               <Input.Search
                 placeholder="Search"
                 enterButton="Search"
@@ -217,13 +217,42 @@ function App() {
                 textAlign: 'center'
               }}
             >
+              {' '}
               <Route
                 key={`homepageContent`}
                 path={'/'}
                 exact={true}
                 render={Data.tabs[0].component}
               />
-
+              {/* Create a route for the seach */}
+              <Route
+                key={'searchKey'}
+                path={'/search'}
+                exact
+                render={() => {
+                  return (
+                    <div className="resultsPane">
+                      {searchResults.length > 0 ? (
+                        searchResults.map(matchingChapter => {
+                          return (
+                            <Link to={matchingChapter.fullPath}>
+                              <Card
+                                size="small"
+                                title={matchingChapter.chapterName}
+                                className="resultCard"
+                              >
+                                {matchingChapter.chapterSlug}
+                              </Card>
+                            </Link>
+                          );
+                        })
+                      ) : (
+                        <span>No Matching Search Results</span>
+                      )}
+                    </div>
+                  );
+                }}
+              />
               {/* For each tab, render a route for it's default content and its chapters */}
               {Data.tabs.map((tb, i) => {
                 return (
@@ -245,29 +274,6 @@ function App() {
                   ></Route>
                 );
               })}
-
-              {/* Create a route for the seach */}
-              <Route key={'searchKey'} path={'/search'} exact>
-                <div className="resultsPane">
-                  {searchResults.length > 0 ? (
-                    searchResults.map(matchingChapter => {
-                      return (
-                        <Link to={matchingChapter.fullPath}>
-                          <Card
-                            size="small"
-                            title={matchingChapter.chapterName}
-                            className="resultCard"
-                          >
-                            {matchingChapter.chapterSlug}
-                          </Card>
-                        </Link>
-                      );
-                    })
-                  ) : (
-                    <span>No Matching Search Results</span>
-                  )}
-                </div>
-              </Route>
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
