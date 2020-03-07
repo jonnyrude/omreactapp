@@ -61,12 +61,13 @@ function App() {
   // Returns an array of chapters with their name, path (/tab/chapter), and frontMatter
   const search = function(searchTerm) {
     let searchResults = [];
+    let lowerSearch = searchTerm.toLowerCase();
     Data.tabs.forEach(tabsToSearch => {
       // console.log(tabsToSearch.name);
       tabsToSearch.chapters.forEach(chapterToSearch => {
         if (chapterToSearch.mdxFrontMatter) {
           let mdx = chapterToSearch.mdxFrontMatter;
-          let lowerSearch = searchTerm.toLowerCase();
+
           if (
             mdx.title.toLowerCase().includes(lowerSearch) ||
             mdx.slug.toLowerCase().includes(lowerSearch)
@@ -80,7 +81,32 @@ function App() {
         }
       });
     });
-    return searchResults;
+
+    // Sort results by first appearance of search term
+    // Chapter first, then slug
+    return searchResults.sort((a, b) => {
+      let aLowerChapter = a.chapterName.toLowerCase();
+      let bLowerChapter = b.chapterName.toLowerCase();
+      let aLowerSlug = a.chapterSlug.toLowerCase();
+      let bLowerSlug = b.chapterSlug.toLowerCase();
+
+      if (aLowerChapter.includes(lowerSearch)) {
+        return bLowerChapter.includes(lowerSearch)
+          ? aLowerChapter.indexOf(lowerSearch) -
+              bLowerChapter.indexOf(lowerSearch)
+          : -1;
+      } else if (bLowerChapter.includes(lowerSearch)) {
+        return 1;
+      } else if (aLowerSlug.includes(lowerSearch)) {
+        return bLowerSlug.includes(lowerSearch)
+          ? aLowerSlug.indexOf(lowerSearch) - bLowerSlug.indexOf(lowerSearch)
+          : -1;
+      } else if (bLowerSlug.includes(lowerSearch)) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
   };
 
   const [searchResults, setSearchResults] = useState([]);
@@ -208,6 +234,15 @@ function App() {
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
           </Breadcrumb> */}
+
+          {/*
+           *
+           *  MAIN
+           *   CONTENT
+           *
+           *
+           *
+           *  */}
 
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div
