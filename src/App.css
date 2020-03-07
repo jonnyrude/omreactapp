@@ -1,51 +1,20 @@
 @import '~antd/dist/antd.css';
 
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.nav-link {
-  color: red;
-  display: inline;
-  text-decoration: none;
+li > a,
+.ant-input-search {
+  font-size: 18px;
 }
 
 .menuSearch {
   float: right;
+  font-size: 18px;
 }
 
 .ant-input-search {
   vertical-align: middle;
+}
+button > span {
+  font-size: 16px;
 }
 
 .resultsPane {
@@ -56,4 +25,12 @@
 .resultCard {
   margin-top: 25px;
   text-align: left;
+}
+
+.contentDiv {
+  padding: 24px 48px;
+  background-color: #fff;
+}
+
+.contentDiv > h1 {
 }

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Link, Route, Switch } from 'react-router-dom';
-import { Layout, Menu, Input, Card, Icon, Breadcrumb, Button } from 'antd';
+import { Layout, Menu, Input, Card, Typography } from 'antd';
 import ContentManifest from './content/contentManifest.json';
 import { Data } from './dataSource.js';
 import MyMenu from './myMenu.js';
+import { MDXProvider } from '@mdx-js/react';
+import { ComponentMap } from './componentMap.js';
 
 // CONTENT
 import Home, {
@@ -112,211 +114,209 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
 
   return (
-    <Layout>
-      <Header className="header">
-        {/* NOTHING IN THIS LOGO YET */}
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          // defaultSelectedKeys={['1']}
-          style={{ lineHeight: '64px' }}
-        >
-          {/*
-           * CREATE TOP   TABS   TABS    TABS    TABS
-           *
-           */}
-          {Data.tabs.map((tab, i) => {
-            return (
-              <Menu.Item
-                key={i + 1}
-                id={tab.path.slice(1)}
-                className={
-                  'tab-menu-item'
-                  // (window.location.hash === '#/' && tab.name === 'Home') ||
-                  // window.location.hash.slice(2).startsWith(tab.path.slice(1))
-                  //   ? 'ant-menu-item-select'
-                  //   : ''
-                }
-              >
-                <Link
-                  to={tab.path + tab.chapters[0].path}
-                  className="tab-link"
-                  // style={{ color: 'red' }}
-                >{`${tab.name}`}</Link>
-              </Menu.Item>
-            );
-          })}
-
-          {/*
-           * *
-           * SEARCH BAR
-           * *
-           * *
-           * */}
-
-          <div className="menuSearch">
-            <Link to="/search" draggable="false">
-              <Input.Search
-                placeholder="Search"
-                enterButton="Search"
-                onSearch={(value, event) => {
-                  console.log(`Searched for: ${value}`);
-                  let results = search(value);
-                  setSearchResults(results);
-                }}
-                // onChange={e => console.log(e)}
-              />
-            </Link>
-          </div>
-        </Menu>
-      </Header>
+    // this first wrapper translates each defauld mdx -> HTML into a given component
+    // as declared in compnentMap.js
+    <MDXProvider components={ComponentMap}>
       <Layout>
-        <Sider
-          collapsible="true"
-          style={{
-            overflow: 'auto',
-            height: '100vh',
-            positions: 'fixed',
-            left: '0'
-          }}
-        >
-          {/* ****
-           *
-           * Sider Menu
-           *
-           * * */}
-
-          <Switch>
+        <Header className="header">
+          {/* NOTHING IN THIS LOGO YET */}
+          <div className="logo" />
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            // defaultSelectedKeys={['1']}
+            style={{ lineHeight: '64px' }}
+          >
+            {/*
+             * CREATE TOP   TABS   TABS    TABS    TABS
+             *
+             */}
             {Data.tabs.map((tab, i) => {
               return (
-                <Route
-                  key={i}
-                  path={`${tab.path}`}
-                  exact={tab.exact}
-                  render={propsForSider => (
-                    <Menu
-                      theme="dark"
-                      mode="inline"
-                      // defaultSelectedKeys={['chpter0']}
-                      defaultOpenKeys={['sub1']}
-                      style={{ height: '100%', borderRight: 0 }}
-                    >
-                      {/* {console.log(propsForSider)} */}
-                      {tab.chapters &&
-                        tab.chapters.map((chapter, i) => {
-                          return (
-                            <Menu.Item
-                              key={`chpter${i}`}
-                              className={
-                                window.location.hash.endsWith(chapter.path) &&
-                                'ant-menu-item-selected'
-                              }
-                            >
-                              <Link
-                                to={propsForSider.match.path + chapter.path}
-                              >
-                                {chapter.name}
-                              </Link>
-                            </Menu.Item>
-                          );
-                        })}
-                    </Menu>
-                  )}
-                ></Route>
+                <Menu.Item
+                  key={i + 1}
+                  id={tab.path.slice(1)}
+                  className={
+                    'tab-menu-item'
+                    // (window.location.hash === '#/' && tab.name === 'Home') ||
+                    // window.location.hash.slice(2).startsWith(tab.path.slice(1))
+                    //   ? 'ant-menu-item-select'
+                    //   : ''
+                  }
+                >
+                  <Link
+                    to={tab.path + tab.chapters[0].path}
+                    className="tab-link"
+                    // style={{ color: 'red' }}
+                  >{`${tab.name}`}</Link>
+                </Menu.Item>
               );
             })}
-          </Switch>
-        </Sider>
-        <Layout style={{ marginLeft: 20 }}>
-          {/* <Breadcrumb style={{ margin: '16px 0' }}>
+
+            {/*
+             * *
+             * SEARCH BAR
+             * *
+             * *
+             * */}
+
+            <div className="menuSearch">
+              <Link to="/search" draggable="false">
+                <Input.Search
+                  placeholder="Search"
+                  enterButton="Search"
+                  onSearch={(value, event) => {
+                    console.log(`Searched for: ${value}`);
+                    let results = search(value);
+                    setSearchResults(results);
+                  }}
+                  // onChange={e => console.log(e)}
+                />
+              </Link>
+            </div>
+          </Menu>
+        </Header>
+        <Layout>
+          <Sider
+            collapsible="true"
+            style={{
+              overflow: 'auto',
+              height: '100vh',
+              positions: 'fixed',
+              left: '0'
+            }}
+          >
+            {/* ****
+             *
+             * Sider Menu
+             *
+             * * */}
+
+            <Switch>
+              {Data.tabs.map((tab, i) => {
+                return (
+                  <Route
+                    key={i}
+                    path={`${tab.path}`}
+                    exact={tab.exact}
+                    render={propsForSider => (
+                      <Menu
+                        theme="dark"
+                        mode="inline"
+                        // defaultSelectedKeys={['chpter0']}
+                        defaultOpenKeys={['sub1']}
+                        style={{ height: '100%', borderRight: 0 }}
+                      >
+                        {/* {console.log(propsForSider)} */}
+                        {tab.chapters &&
+                          tab.chapters.map((chapter, i) => {
+                            return (
+                              <Menu.Item
+                                key={`chpter${i}`}
+                                className={
+                                  window.location.hash.endsWith(chapter.path) &&
+                                  'ant-menu-item-selected'
+                                }
+                              >
+                                <Link
+                                  to={propsForSider.match.path + chapter.path}
+                                >
+                                  {chapter.name}
+                                </Link>
+                              </Menu.Item>
+                            );
+                          })}
+                      </Menu>
+                    )}
+                  ></Route>
+                );
+              })}
+            </Switch>
+          </Sider>
+          <Layout style={{ marginLeft: 20 }}>
+            {/* <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
           </Breadcrumb> */}
 
-          {/*
-           *
-           *  MAIN
-           *   CONTENT
-           *
-           *
-           *
-           *  */}
+            {/*
+             *
+             *  MAIN
+             *   CONTENT
+             *
+             *
+             *
+             *  */}
 
-          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div
-              style={{
-                padding: 24,
-                background: '#fff',
-                textAlign: 'center'
-              }}
-            >
-              {' '}
-              <Route
-                key={`homepageContent`}
-                path={'/'}
-                exact={true}
-                render={Data.tabs[0].component}
-              />
-              {/* Create a route for the seach */}
-              <Route
-                key={'searchKey'}
-                path={'/search'}
-                exact
-                render={() => {
+            <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+              <div className="contentDiv">
+                {' '}
+                <Route
+                  key={`homepageContent`}
+                  path={'/'}
+                  exact={true}
+                  render={Data.tabs[0].component}
+                />
+                {/* Create a route for the seach */}
+                <Route
+                  key={'searchKey'}
+                  path={'/search'}
+                  exact
+                  render={() => {
+                    return (
+                      <div className="resultsPane">
+                        {searchResults.length > 0 ? (
+                          searchResults.map(matchingChapter => {
+                            return (
+                              <Link to={matchingChapter.fullPath}>
+                                <Card
+                                  size="small"
+                                  title={matchingChapter.chapterName}
+                                  className="resultCard"
+                                >
+                                  {matchingChapter.chapterSlug}
+                                </Card>
+                              </Link>
+                            );
+                          })
+                        ) : (
+                          <span>No Matching Search Results</span>
+                        )}
+                      </div>
+                    );
+                  }}
+                />
+                {/* For each tab, render a route for it's default content and its chapters */}
+                {Data.tabs.map((tb, i) => {
                   return (
-                    <div className="resultsPane">
-                      {searchResults.length > 0 ? (
-                        searchResults.map(matchingChapter => {
+                    <Route
+                      key={`tb${i}`}
+                      path={tb.path}
+                      exact={false}
+                      render={propsForContent => {
+                        return tb.chapters.map((chpter, i) => {
                           return (
-                            <Link to={matchingChapter.fullPath}>
-                              <Card
-                                size="small"
-                                title={matchingChapter.chapterName}
-                                className="resultCard"
-                              >
-                                {matchingChapter.chapterSlug}
-                              </Card>
-                            </Link>
+                            <Route
+                              key={`tbchptr#${i}`}
+                              path={propsForContent.match.path + chpter.path}
+                              render={chpter.component}
+                            />
                           );
-                        })
-                      ) : (
-                        <span>No Matching Search Results</span>
-                      )}
-                    </div>
+                        });
+                      }}
+                    ></Route>
                   );
-                }}
-              />
-              {/* For each tab, render a route for it's default content and its chapters */}
-              {Data.tabs.map((tb, i) => {
-                return (
-                  <Route
-                    key={`tb${i}`}
-                    path={tb.path}
-                    exact={false}
-                    render={propsForContent => {
-                      return tb.chapters.map((chpter, i) => {
-                        return (
-                          <Route
-                            key={`tbchptr#${i}`}
-                            path={propsForContent.match.path + chpter.path}
-                            render={chpter.component}
-                          />
-                        );
-                      });
-                    }}
-                  ></Route>
-                );
-              })}
-            </div>
-          </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            Insert Page Through Elements here
-          </Footer>
+                })}
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>
+              Insert Page Through Elements here
+            </Footer>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
+    </MDXProvider>
   );
 }
 
