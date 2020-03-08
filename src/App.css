@@ -32,5 +32,6 @@ button > span {
   background-color: #fff;
 }
 
-.contentDiv > h1 {
+div.ant-typography {
+  font-size: 22px;
 }
