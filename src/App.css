@@ -1,5 +1,9 @@
 @import '~antd/dist/antd.css';
 
+body {
+  font-size: 20px;
+}
+
 li > a,
 .ant-input-search {
   font-size: 18px;
@@ -27,11 +31,14 @@ button > span {
   text-align: left;
 }
 
+.sideMenu {
+  overflow-y: scroll;
+  max-height: 80vh;
+}
+
 .contentDiv {
   padding: 24px 48px;
   background-color: #fff;
-}
-
-div.ant-typography {
-  font-size: 22px;
+  overflow-y: scroll;
+  max-height: 90vh;
 }

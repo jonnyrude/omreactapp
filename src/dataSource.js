@@ -3,25 +3,37 @@ import Home, {
 } from './content/home/homepage.mdx';
 import OmNews, {
   frontMatter as omNewsFrontMatter
-} from './content/home/omnews.mdx';
+} from './content/news/omnews.mdx';
 import Websites, {
   frontMatter as websiteFrontMatter
-} from './content/resources/websites.mdx';
-import InternalManuals, {
-  frontMatter as interManualsFrontMatter
-} from './content/resources/internal-manuals.mdx';
-import SoftwareManuals, {
-  frontMatter as softManualsFrontMatter
-} from './content/resources/software-manuals.mdx';
-import Procedures, {
-  frontMatter as procedureFrontMatter
-} from './content/resources/procedures.mdx';
-import Roster, {
-  frontMatter as rosterFrontMatter
-} from './content/staff/roster.mdx';
-import OrgChart, {
-  frontMatter as orgChartFrontMatter
-} from './content/staff/org-chart.mdx';
+} from './content/resources/WebsitesAndLogins.mdx';
+import PCLawIntoLawBase, {
+  frontMatter as PCLawIntoLBFrontmatter
+} from './content/LawBase/PCLawIntoLawBase.mdx';
+import ConflictCheck, {
+  frontMatter as ConflictCheckFrontmatter
+} from './content/processes/ConflictCheck.mdx';
+import SettlementCheck, {
+  frontMatter as SettleCheckFrontmatter
+} from './content/processes/SettlmentCheck.mdx';
+import WebsitesAndLogins, {
+  frontMatter as WebLoginFrontmatter
+} from './content/resources/WebsitesAndLogins.mdx';
+import CallForwarding, {
+  frontMatter as CallFwdFrontMatter
+} from './content/buildingandequipment/CallForwarding/CallForwarding.mdx';
+// import , {
+//   frontMatter as
+// } from './content/.mdx'
+// import , {
+//   frontMatter as
+// } from './content/.mdx'
+// import , {
+//   frontMatter as
+// } from './content/.mdx'
+// import , {
+//   frontMatter as
+// } from './content/.mdx'
 
 // New MDX file needs to be
 //   1. Imported and assinged a variable starting with a capital letter (above)
@@ -45,12 +57,6 @@ export const Data = {
         {
           name: 'Recent',
           path: '/recent',
-          component: Home,
-          mdxFrontMatter: homeFrontMatter
-        },
-        {
-          name: 'Archive',
-          path: '/archive',
           component: OmNews,
           mdxFrontMatter: omNewsFrontMatter
         }
@@ -66,43 +72,63 @@ export const Data = {
           path: '/websites',
           component: Websites,
           mdxFrontMatter: websiteFrontMatter
-        },
-        {
-          name: 'Firm Manuals',
-          path: '/firm-manuals',
-          component: InternalManuals,
-          mdxFrontMatter: interManualsFrontMatter
-        },
-        {
-          name: 'Software Support',
-          path: '/software',
-          component: SoftwareManuals,
-          mdxFrontMatter: softManualsFrontMatter
-        },
-        {
-          name: 'Formal Procedures',
-          path: '/procedures',
-          component: Procedures,
-          mdxFrontMatter: procedureFrontMatter
         }
       ]
     },
     {
-      name: 'Staff',
-      path: '/staff',
+      name: 'Processes',
+      path: '/processes',
       exact: false,
       chapters: [
         {
-          name: 'Roster',
-          path: '/roster',
-          component: Roster,
-          mdxFrontMatter: rosterFrontMatter
+          name: 'Conflict Check',
+          path: '/conflict-check',
+          component: ConflictCheck,
+          mdxFrontMatter: ConflictCheckFrontmatter
         },
         {
-          name: 'Org Chart',
-          path: '/org-chart',
-          component: OrgChart,
-          mdxFrontMatter: orgChartFrontMatter
+          name: 'Settlement Check',
+          path: '/settlement-check',
+          component: SettlementCheck,
+          mdxFrontMatter: SettleCheckFrontmatter
+        }
+      ]
+    },
+    {
+      name: 'IT & Software',
+      path: '/technology',
+      exact: false,
+      chapters: [{ path: '/home', component: Home }]
+    },
+    {
+      name: 'HR & Benefits',
+      path: '/hr',
+      exact: false,
+      chapters: [{ path: '/home', component: Home }]
+    },
+    {
+      name: 'LawBase',
+      path: '/lawbase',
+      exact: false,
+      chapters: [
+        {
+          name: 'PC Law Data into LawBase',
+          path: '/pc-law-to-lawbase',
+          component: PCLawIntoLawBase,
+          mdxFrontMatter: PCLawIntoLBFrontmatter
+        }
+      ]
+    },
+    {
+      name: 'Building & Equipment',
+      path: '/building-equipment',
+      exact: false,
+      chapters: [
+        {
+          name: 'Call Forwarding',
+          path: '/call-forwarding',
+          component: CallForwarding,
+          mdxFrontMatter: CallFwdFrontMatter
         }
       ]
     }

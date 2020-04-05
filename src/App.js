@@ -8,14 +8,7 @@ import MyMenu from './myMenu.js';
 import { MDXProvider } from '@mdx-js/react';
 import { ComponentMap } from './componentMap.js';
 
-// CONTENT
-import Home, {
-  frontMatter as homeFrontMatter
-} from './content/home/homepage.mdx';
-import MenuItem from 'antd/lib/menu/MenuItem';
-
 const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
 
 // TODO:
 // TODO:
@@ -192,7 +185,7 @@ function App() {
              *
              * * */}
 
-            <Switch>
+            <Switch className="sideMenu">
               {Data.tabs.map((tab, i) => {
                 return (
                   <Route
