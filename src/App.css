@@ -1,12 +1,12 @@
 @import '~antd/dist/antd.css';
 
 body {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 li > a,
 .ant-input-search {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .menuSearch {
@@ -40,5 +40,5 @@ button > span {
   padding: 24px 48px;
   background-color: #fff;
   overflow-y: scroll;
-  max-height: 90vh;
+  max-height: 100%;
 }
