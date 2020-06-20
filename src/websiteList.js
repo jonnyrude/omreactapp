@@ -4,26 +4,14 @@ import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
 import Data from './content/resources/websites';
 
+// Reference: https://ant.design/components/table
+// TODO: edit column width
+// TODO: make expandable with added notes
+
 export default function () {
-  // const sitearray = JSON.parse(Sites);
-  // for (const prop in Sites) {
-  //   console.log(`${prop}: ${Sites[prop]}`);
-  // }
-  // console.log(Object.keys(Sites));
-
-  // const siteKeys = Object.keys(Sites);
-
-  // Company | Name (url linked) | Notes | Tags | Firm Account
+  // Company | Name (url linked OR serachable?) | Notes | Tags | Firm Account
 
   const [data, setData] = useState(Object.create(Data.sites));
-
-  // ///////////////////////////////////////////////////////////////////
-
-  // state = {
-  //   searchText: '',
-  //   searchedColumn: '',
-  // };
-
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const [searchInput, setSearchInput] = useState('');
@@ -104,20 +92,12 @@ export default function () {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
-
-    // this.setState({
-    //   searchText: selectedKeys[0],
-    //   searchedColumn: dataIndex,
-    // });
   };
 
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText('');
-    // this.setState({ searchText: '' });
   };
-
-  ///////////////////////////////////////////////////////////////////////
 
   const columns = [
     {
@@ -132,7 +112,7 @@ export default function () {
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => <a href={record.url}>{text}</a>,
-      ...getColumnSearchProps('name'),
+      ...getColumnSearchProps('name'), // TODO: Remove?
     },
     {
       title: 'Tags',
@@ -154,6 +134,7 @@ export default function () {
         </>
       ),
       filters: [
+        // TO ADD TAG FILTERS, add objects to this array
         {
           text: 'Medical',
           value: 'medical',
@@ -179,31 +160,5 @@ export default function () {
     },
   ];
 
-  return (
-    <Table columns={columns} dataSource={data} />
-
-    // <div>
-    //   <p>{site.name}</p>
-    //   <a href={site.url}>{site.url}</a>
-    // </div>
-
-    // <List
-    //   header={<div>Header</div>}
-    //   // footer={<div>Footer</div>}
-    //   itemLayout="horizontal"
-    //   bordered
-    //   dataSource={Web.sites}
-    //   renderItem={(item) => {
-    //     return (
-    //       <List.Item>
-    //         <List.Item.Meta
-    //           title={item.name}
-    //           description={<a>{item.url}</a>}
-    //         ></List.Item.Meta>
-    //         TAG?
-    //       </List.Item>
-    //     );
-    //   }}
-    // />
-  );
+  return <Table columns={columns} dataSource={data} />;
 }
