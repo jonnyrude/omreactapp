@@ -20,7 +20,7 @@ function App() {
     // This section highlights the correct tab, based on the url
     //
     let pagePath = window.location.hash.slice(2);
-    document.querySelectorAll('.tab-menu-item').forEach(i => {
+    document.querySelectorAll('.tab-menu-item').forEach((i) => {
       if (i.id === '') {
         // Home tab is special, because of it's path
         if (
@@ -54,12 +54,12 @@ function App() {
   //  SEARCH FUNCTION
   //
   // Returns an array of chapters with their name, path (/tab/chapter), and frontMatter
-  const search = function(searchTerm) {
+  const search = function (searchTerm) {
     let searchResults = [];
     let lowerSearch = searchTerm.toLowerCase();
-    Data.tabs.forEach(tabsToSearch => {
+    Data.tabs.forEach((tabsToSearch) => {
       // console.log(tabsToSearch.name);
-      tabsToSearch.chapters.forEach(chapterToSearch => {
+      tabsToSearch.chapters.forEach((chapterToSearch) => {
         if (chapterToSearch.mdxFrontMatter) {
           let mdx = chapterToSearch.mdxFrontMatter;
 
@@ -70,7 +70,7 @@ function App() {
             searchResults.push({
               chapterName: chapterToSearch.name,
               fullPath: tabsToSearch.path + chapterToSearch.path,
-              chapterSlug: chapterToSearch.mdxFrontMatter.slug
+              chapterSlug: chapterToSearch.mdxFrontMatter.slug,
             });
           }
         }
@@ -110,7 +110,7 @@ function App() {
     // this first wrapper translates each defauld mdx -> HTML into a given component
     // as declared in compnentMap.js
     <MDXProvider components={ComponentMap}>
-      <Layout>
+      <Layout style={{ height: '100vh' }}>
         <Header className="header">
           {/* NOTHING IN THIS LOGO YET */}
           <div className="logo" />
@@ -174,9 +174,9 @@ function App() {
             collapsible="true"
             style={{
               overflow: 'auto',
-              height: '100vh',
+              // height: '100vh',
               positions: 'fixed',
-              left: '0'
+              left: '0',
             }}
           >
             {/* ****
@@ -192,7 +192,7 @@ function App() {
                     key={i}
                     path={`${tab.path}`}
                     exact={tab.exact}
-                    render={propsForSider => (
+                    render={(propsForSider) => (
                       <Menu
                         theme="dark"
                         mode="inline"
@@ -260,7 +260,7 @@ function App() {
                     return (
                       <div className="resultsPane">
                         {searchResults.length > 0 ? (
-                          searchResults.map(matchingChapter => {
+                          searchResults.map((matchingChapter) => {
                             return (
                               <Link to={matchingChapter.fullPath}>
                                 <Card
@@ -287,7 +287,7 @@ function App() {
                       key={`tb${i}`}
                       path={tb.path}
                       exact={false}
-                      render={propsForContent => {
+                      render={(propsForContent) => {
                         return tb.chapters.map((chpter, i) => {
                           return (
                             <Route
