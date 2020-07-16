@@ -12,6 +12,23 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 In the `package.json` file, change the homepage to `<directory>:/build`, as in
 `H:/build`
 
+<br />
+<br />
+<br />
+<br />
+## To DO:
+ - Import the mdx files automatically - https://github.com/kentcdodds/babel-plugin-macros
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 # Available Scripts
 
 In the project directory, you can run:

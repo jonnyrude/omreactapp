@@ -112,7 +112,7 @@ export default function () {
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => <a href={record.url}>{text}</a>,
-      ...getColumnSearchProps('name'), // TODO: Remove?
+      // ...getColumnSearchProps('name'), // TODO: Remove?
     },
     {
       title: 'Tags',

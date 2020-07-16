@@ -2,6 +2,7 @@
 
 body {
   font-size: 16px;
+  color: rgba(0, 0, 0, 0.95);
 }
 
 li > a,
@@ -41,4 +42,21 @@ button > span {
   background-color: #fff;
   overflow-y: scroll;
   max-height: 100%;
+}
+
+.slimContent {
+  max-width: 650px;
+  margin: auto;
+}
+
+footer {
+  height: 60px;
+}
+
+.ant-typography {
+  color: rgba(0, 0, 0, 0.95);
+}
+
+.ant-table {
+  color: rgba(0, 0, 0, 0.95);
 }
